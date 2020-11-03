@@ -14,7 +14,7 @@ public class ZombieController : MonoBehaviour
     private bool walking;
 
     // Is the zombie dead? (like more than usual)
-    private bool dead;
+    public bool dead;
 
     // Zombie health
     private float health;

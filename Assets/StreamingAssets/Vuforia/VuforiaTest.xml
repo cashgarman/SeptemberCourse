@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <QCARConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="qcar_config.xsd">
   <Tracking>
+    <ImageTarget name="tower_tag" size="1.000000 1.000000" />
     <ImageTarget name="castle_tag" size="1.000000 1.000000" />
     <ImageTarget name="zombie_tag" size="1.000000 1.000000" />
     <ImageTarget name="flowcode" size="1.000000 1.000000" />

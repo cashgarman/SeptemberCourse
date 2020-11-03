@@ -179,10 +179,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   castle: {fileID: 0}
-  movementSpeed: 0.5
+  movementSpeed: 0.25
   damageAmount: 5
   healthBar: {fileID: 6182292296823322944}
   startingHealth: 50
+  dead: 0
 --- !u!136 &4837645854930277288
 CapsuleCollider:
   m_ObjectHideFlags: 0
