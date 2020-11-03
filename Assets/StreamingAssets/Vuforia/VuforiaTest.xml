@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<QCARConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="qcar_config.xsd">
+  <Tracking>
+    <ImageTarget name="castle_tag" size="1.000000 1.000000" />
+    <ImageTarget name="zombie_tag" size="1.000000 1.000000" />
+    <ImageTarget name="flowcode" size="1.000000 1.000000" />
+    <ImageTarget name="tree" size="1.000000 1.000000" />
+    <ImageTarget name="pins" size="0.400000 0.069070" />
+    <ImageTarget name="bowling_ball" size="0.400000 0.213333" />
+    <ImageTarget name="table_bowling" size="1.000000 0.165541" />
+    <ImageTarget name="tower" size="1.000000 1.102410" />
+    <ImageTarget name="printed_origin" size="3.000000 0.411168" />
+    <ImageTarget name="printed_castle" size="1.000000 1.221996" />
+    <ImageTarget name="printed_zombie" size="1.000000 1.401496" />
+    <ImageTarget name="tower_defense" size="0.280000 0.209926" />
+    <ImageTarget name="Flying_Heart" size="1.000000 0.562500" />
+    <ImageTarget name="Hand" size="1.000000 0.562500" />
+    <ImageTarget name="Hornet" size="1.000000 0.562500" />
+    <ImageTarget name="Ghostbusters" size="1.000000 0.562500" />
+    <ImageTarget name="Zombie" size="1.000000 0.562500" />
+    <ImageTarget name="vader" size="1.000000 1.185328" />
+    <ImageTarget name="manroe" size="1.000000 1.248092" />
+    <ImageTarget name="rock_you" size="1.000000 0.723577" />
+    <ImageTarget name="punk_rock" size="1.000000 0.986111" />
+    <ImageTarget name="dope" size="1.000000 0.494565" />
+    <ImageTarget name="rad_monkey" size="1.000000 1.187500" />
+    <ImageTarget name="keyboard_3" size="0.130000 0.063778" />
+    <ImageTarget name="keyboard_2" size="0.180000 0.087282" />
+    <ImageTarget name="keyboard" size="0.180000 0.076913" />
+    <ImageTarget name="Wrist4" size="0.050000 0.047476" />
+    <ImageTarget name="wrist3" size="0.050000 0.041743" />
+    <ImageTarget name="wrist2" size="0.070000 0.063317" />
+    <ImageTarget name="wrist" size="0.050000 0.043231" />
+    <ImageTarget name="skull_heart" size="0.055000 0.063883" />
+    <ImageTarget name="clockface" size="0.050000 0.053559" />
+    <ImageTarget name="hack_the_planet" size="1.000000 0.721566" />
+    <ImageTarget name="computer" size="1.000000 0.655000" />
+    <ImageTarget name="welcome_to_ar" size="1.000000 0.676806" />
+    <ImageTarget name="hello_smiley" size="1.000000 0.700608" />
+  </Tracking>
+</QCARConfig>
