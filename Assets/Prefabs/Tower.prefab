@@ -157,7 +157,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rangeIndicator: {fileID: 600111946}
   reloadTime: 1
-  damagePerShot: 5
+  damagePerShot: 10
 --- !u!1 &1518330348689947836
 GameObject:
   m_ObjectHideFlags: 0

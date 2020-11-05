@@ -29,7 +29,7 @@ public class Tower : MonoBehaviour
             }
 
             // If enough time has passed since we last fired
-            if(Time.time - timeSinceLastFired > reloadTime)
+            if(Time.time - timeSinceLastFired > reloadTime && currentTarget != null)
             {
                 // Do damage to the current target
                 currentTarget.OnDamage(damagePerShot);

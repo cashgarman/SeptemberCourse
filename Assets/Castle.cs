@@ -7,6 +7,7 @@ public class Castle : MonoBehaviour
     public Slider healthBar;
     public float startingHealth;
     public float returnDamage;
+    public ZombieGame game;
 
     // Castle health
     private float health;
@@ -24,7 +25,12 @@ public class Castle : MonoBehaviour
             // Update the castle's health bar (as a percentage of the starting health)
             healthBar.value = health / startingHealth;
 
-            // TODO: Handle when the castle runs out of health, game over
+            // If the castle has been destroyed
+            if(health <= 0)
+            {
+                // Let the game know
+                game.OnCastleDestroyed();
+            }
         }
     }
 

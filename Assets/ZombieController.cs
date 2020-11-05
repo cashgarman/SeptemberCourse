@@ -18,6 +18,8 @@ public class ZombieController : MonoBehaviour
 
     // Zombie health
     private float health;
+    internal ZombieGame game;
+
     private float Health
     {
         get
@@ -35,8 +37,12 @@ public class ZombieController : MonoBehaviour
             // If the zombie has died
             if(health <= 0)
             {
-                // Flag the zombie as dead
+                // Flag the zombie as dead (and stop walking)
                 dead = true;
+                walking = false;
+
+                // Let the game know a zombie has been killed
+                game.OnZombieKilled(this);
 
                 // Play the death animation
                 animator.SetTrigger("Dead");
