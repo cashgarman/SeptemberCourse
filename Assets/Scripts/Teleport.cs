@@ -9,6 +9,12 @@ public class Teleport : MonoBehaviour
     private LineRenderer beam;
     public float teleportRange;
     private bool isTriggerHeld;
+    private Vector3 teleportPosition;
+    private bool isTeleportValid;
+    public Transform teleportIndicator;
+    public Color validColour;
+    public Color invalidColour;
+    public Transform player;
 
     void Start()
     {
@@ -40,7 +46,18 @@ public class Teleport : MonoBehaviour
             // Hide the beam
             beam.enabled = false;
 
-            // TODO: Actually teleport the player
+            // If we have a valid teleport position
+            if(isTeleportValid)
+            {
+                // Teleport the player to the teleport target
+                player.position = teleportPosition;
+
+                // We no longer have a valid teleport
+                isTeleportValid = false;
+
+                // Hide the teleport indicator
+                teleportIndicator.gameObject.SetActive(false);
+            }
         }
 
         // If the trigger is being held
@@ -59,11 +76,49 @@ public class Teleport : MonoBehaviour
             // Set the start and end positions of the beam
             beam.SetPosition(0, transform.position);
             beam.SetPosition(1, hit.point);
+
+            // Show the beam
+            beam.enabled = true;
+
+            // If the target is a valid place to teleport to
+            if(IsValidTeleportTarget(hit.collider))
+            {
+                // Store the valid teleport target
+                teleportPosition = hit.point;
+                isTeleportValid = true;
+
+                // Show and position the teleport indicator
+                teleportIndicator.position = teleportPosition + Vector3.up * 0.01f;
+                teleportIndicator.gameObject.SetActive(true);
+
+                // Change the colour of the beam to the valid colour
+                beam.material.color = validColour;
+            }
+            // If the target is an invalid place to teleport to
+            else
+            {
+                // Flag the target position as invalid
+                isTeleportValid = false;
+
+                // Hide the teleport indicator
+                teleportIndicator.gameObject.SetActive(false);
+
+                // Change the colour of the beam to the invalid colour
+                beam.material.color = invalidColour;
+            }
         }
         else
         {
             // Hide the beam
             beam.enabled = false;
+
+            // Flag the target position as invalid
+            isTeleportValid = false;
         }
+    }
+
+    private bool IsValidTeleportTarget(Collider target)
+    {
+        return target.gameObject.layer != LayerMask.NameToLayer("CantTeleportHere");
     }
 }
