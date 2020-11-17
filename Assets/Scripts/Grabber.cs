@@ -4,6 +4,7 @@ using UnityEngine;
 public class Grabber : MonoBehaviour
 {
     public string grabButtonName;
+    public string triggerButtonName;
     private Animator animator;
     private Grabbable highlightedObject;
     private Grabbable grabbedObject;
@@ -16,13 +17,13 @@ public class Grabber : MonoBehaviour
     void Update()
     {
         // If the grip trigger button was pressed
-        if(Input.GetButtonDown(grabButtonName))
+        if (Input.GetButtonDown(grabButtonName))
         {
             // Play the gripping animation on the hand
             animator.SetBool("Gripped", true);
 
             // If we have a highlighted object
-            if(highlightedObject != null)
+            if (highlightedObject != null)
             {
                 // Grab the object
                 GrabObject(highlightedObject);
@@ -42,6 +43,28 @@ public class Grabber : MonoBehaviour
                 DropObject();
             }
         }
+
+        // If the trigger button was pressed
+        if (Input.GetButtonDown(triggerButtonName))
+        {
+            // If we're grabbing an object
+            if(grabbedObject)
+            {
+                // Let the object know a trigger has started being pressed
+                grabbedObject.OnTriggerStart();
+            }
+        }
+
+        // If the trigger button was rele4ased
+        if (Input.GetButtonUp(triggerButtonName))
+        {
+            // If we're grabbing an object
+            if (grabbedObject)
+            {
+                // Let the object know a trigger has stopped being pressed
+                grabbedObject.OnTriggerEnd();
+            }
+        }
     }
 
     private void GrabObject(Grabbable obj)
@@ -56,6 +79,9 @@ public class Grabber : MonoBehaviour
         var rigidBody = grabbedObject.GetComponent<Rigidbody>();
         rigidBody.useGravity = false;
         rigidBody.isKinematic = true;
+
+        // Let the grabbed object know it has been grabbed
+        grabbedObject.OnGrabbed();
     }
 
     private void DropObject()
@@ -68,6 +94,9 @@ public class Grabber : MonoBehaviour
         rigidBody.useGravity = true;
         rigidBody.isKinematic = false;
 
+        // Let the grabbed object know it has been dropped
+        grabbedObject.OnDropped();
+
         // Clear the grabbed object
         grabbedObject = null;
     }
@@ -78,11 +107,21 @@ public class Grabber : MonoBehaviour
         var grabbable = other.GetComponent<Grabbable>();
         if(grabbable != null)
         {
-            // Highlight the grabbable object
-            grabbable.OnHighlight();
+            // If we're already grabbing something
+            if (grabbedObject != null)
+            {
+                // Let the grabbed object know that another object was highlighted
+                grabbedObject.OnAnotherObjectHighlighted(grabbable);
+            }
+            // Otherwise, we're not currently grabbing something
+            else
+            {
+                // Highlight the grabbable object
+                grabbable.OnHighlight();
 
-            // Store the highlighted object
-            highlightedObject = grabbable;
+                // Store the highlighted object
+                highlightedObject = grabbable;
+            }
         }
     }
 

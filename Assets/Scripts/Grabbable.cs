@@ -1,26 +1,43 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Grabbable : MonoBehaviour
 {
     private Material material;
     private Color initialColor;
 
-    void Start()
+    protected virtual void Start()
     {
         material = GetComponent<MeshRenderer>().material;
         initialColor = material.color;
     }
 
-    internal void OnHighlight()
+    public virtual void OnHighlight()
     {
         material.color = Color.yellow;
     }
 
-    internal void OnUnhighlight()
+    public virtual void OnUnhighlight()
     {
         material.color = initialColor;
+    }
+
+    public virtual void OnGrabbed()
+    {
+    }
+    
+    public virtual void OnDropped()
+    {
+    }
+
+    public virtual void OnTriggerStart()
+    {
+    }
+
+    public virtual void OnTriggerEnd()
+    {
+    }
+
+    public virtual void OnAnotherObjectHighlighted(Grabbable otherObject)
+    {
     }
 }
