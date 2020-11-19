@@ -73,12 +73,16 @@ public class Grabber : MonoBehaviour
         grabbedObject = obj;
 
         // Parent the object to the hand
-        grabbedObject.transform.SetParent(transform);
+        //grabbedObject.transform.SetParent(transform);
 
         // Disable gravity on the object and make the object kinematic
-        var rigidBody = grabbedObject.GetComponent<Rigidbody>();
-        rigidBody.useGravity = false;
-        rigidBody.isKinematic = true;
+        //var rigidBody = grabbedObject.GetComponent<Rigidbody>();
+        //rigidBody.useGravity = false;
+        //rigidBody.isKinematic = true;
+
+        // Attach the object to the hand using a fixed joint
+        var fixedJoint = grabbedObject.gameObject.AddComponent<FixedJoint>();
+        fixedJoint.connectedBody = GetComponent<Rigidbody>();
 
         // Let the grabbed object know it has been grabbed
         grabbedObject.OnGrabbed();
@@ -87,12 +91,14 @@ public class Grabber : MonoBehaviour
     private void DropObject()
     {
         // Unparent the grabbed object
-        grabbedObject.transform.SetParent(null);
+        //grabbedObject.transform.SetParent(null);
 
         // Enable gravity and make the object non-kinematic
-        var rigidBody = grabbedObject.GetComponent<Rigidbody>();
-        rigidBody.useGravity = true;
-        rigidBody.isKinematic = false;
+        //var rigidBody = grabbedObject.GetComponent<Rigidbody>();
+        //rigidBody.useGravity = true;
+        //rigidBody.isKinematic = false;
+
+        Destroy(grabbedObject.GetComponent<FixedJoint>());
 
         // Let the grabbed object know it has been dropped
         grabbedObject.OnDropped();

@@ -5,6 +5,7 @@ using UnityEngine;
 public class Paintbrush : Grabbable
 {
     private SphereCollider collider;
+    private float initialSize;
     private Color currentColour;
     public LineRenderer paintStrokePrefab;
     private LineRenderer currentStroke;
@@ -12,12 +13,17 @@ public class Paintbrush : Grabbable
     private List<Vector3> segmentPositions = new List<Vector3>();
     private Vector3 lastSegmentPosition;
     public float segmentLength = 0.01f;
+    public PhysicalSlider slider;
+    private float brushWidth;
+    private float initialBrushWidth;
 
     protected override void Start()
     {
         base.Start();
 
         collider = GetComponent<SphereCollider>();
+        initialSize = transform.localScale.magnitude;
+        brushWidth = initialBrushWidth = paintStrokePrefab.startWidth;
     }
 
     void Update()
@@ -49,6 +55,9 @@ public class Paintbrush : Grabbable
 
         // Set the colour of the paint stroke to match the paintbrush's current colour
         currentStroke.material.color = currentColour;
+
+        // Set the width of the brush stroke
+        currentStroke.startWidth = currentStroke.endWidth = brushWidth;
 
         // Flag the paintbrush as painting
         painting = true;
@@ -106,5 +115,15 @@ public class Paintbrush : Grabbable
             currentColour = paintPot.colour;
             GetComponent<MeshRenderer>().material.color = currentColour;
         }
+    }
+
+    public void SetBrushSize()
+    {
+        // Set the size of the paintbrush object
+        var percent = slider.currentSliderValue;
+        transform.localScale = Vector3.one * initialSize * percent;
+
+        // Set the width of the brush stroke
+        brushWidth = initialBrushWidth * percent;
     }
 }
