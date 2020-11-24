@@ -4,6 +4,7 @@ public class Grabbable : MonoBehaviour
 {
     private Material material;
     private Color initialColor;
+    public bool cantBeDropped;
 
     protected virtual void Start()
     {

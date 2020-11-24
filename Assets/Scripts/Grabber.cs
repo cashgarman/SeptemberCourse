@@ -8,10 +8,17 @@ public class Grabber : MonoBehaviour
     private Animator animator;
     private Grabbable highlightedObject;
     private Grabbable grabbedObject;
+    public Grabbable grabOnStart;
 
     void Start()
     {
         animator = GetComponent<Animator>();
+
+        // If we should grab an object at the start
+        if(grabOnStart != null)
+        {
+            GrabObject(grabOnStart);
+        }
     }
 
     void Update()
@@ -36,8 +43,8 @@ public class Grabber : MonoBehaviour
             // Play the ungripping animation on the hand
             animator.SetBool("Gripped", false);
 
-            // If we have a grabbed object
-            if (grabbedObject != null)
+            // If we have a grabbed object (and it can be dropped)
+            if (grabbedObject != null && !grabbedObject.cantBeDropped)
             {
                 // Drop the object
                 DropObject();
