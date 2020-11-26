@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Spraycan : Grabbable
 {
@@ -16,6 +15,14 @@ public class Spraycan : Grabbable
     public string cycleColourButtonName;
     public Color[] colours;
     private Material topMaterial;
+    private ParticleSystem.MainModule sprayMain;
+    private ParticleSystem.EmissionModule sprayEmission;
+    public ParticleSystem sprayParticles;
+    public ParticleSystem.MinMaxCurve sprayParticleRate = 150f;
+    public float minSplatSize;
+    public float maxSplatSize;
+    public float minSplatAlpha;
+    public float maxSplatAlpha;
 
     void Start()
     {
@@ -23,7 +30,13 @@ public class Spraycan : Grabbable
         currentColourIndex = 0;
         currentColour = colours[currentColourIndex];
         topMaterial = top.GetComponent<MeshRenderer>().material;
+        sprayMain = sprayParticles.main;
+        sprayEmission = sprayParticles.emission;
+        
         UpdateColour();
+
+        // Stop the spray particles at the start
+        sprayEmission.rateOverTime = 0f;
     }
 
     public override void OnHighlight()
@@ -69,6 +82,9 @@ public class Spraycan : Grabbable
     {
         // Change the colour of the top of the spraycan to match the current colour
         topMaterial.color = currentColour;
+
+        // Change the colour of the particles too
+        sprayMain.startColor = currentColour;
     }
 
     public override void OnTriggerStart()
@@ -85,6 +101,7 @@ public class Spraycan : Grabbable
         sprayingSound.Play();
 
         // Start the spray particles
+        sprayEmission.rateOverTime = sprayParticleRate;
     }
 
     private void PlaceSplat()
@@ -98,12 +115,18 @@ public class Spraycan : Grabbable
             // Position and orientate it
             splat.position = hit.point;
 
-            // Set the splat's colour
-            splat.GetComponent<MeshRenderer>().material.color = currentColour;
+            // Calculate the distance from the nozzle to the splat
+            var distance = Vector3.Distance(nozzle.position, hit.point);
 
             // Scale the splat based on how far from the spraycan it is
+            splat.localScale = Vector3.Lerp(minSplatSize * Vector3.one, maxSplatSize * Vector3.one, distance / range);
 
             // Adjust the transparency of the splat based on the distance from the spraycan
+            var adjustedColour = currentColour;
+            adjustedColour.a = Mathf.Lerp(minSplatAlpha, maxSplatAlpha, distance / range);
+
+            // Set the splat's colour
+            splat.GetComponent<MeshRenderer>().material.color = adjustedColour;
         }
     }
 
@@ -118,5 +141,6 @@ public class Spraycan : Grabbable
         sprayingSound.Stop();
 
         // Stop the spray particles
+        sprayEmission.rateOverTime = 0f;
     }
 }
