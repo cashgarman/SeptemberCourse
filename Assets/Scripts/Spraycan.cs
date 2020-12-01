@@ -114,6 +114,7 @@ public class Spraycan : Grabbable
 
             // Position and orientate it
             splat.position = hit.point;
+            splat.forward = -hit.normal;    // WAS MISSING: Face the paint splat away from the surface it hit
 
             // Calculate the distance from the nozzle to the splat
             var distance = Vector3.Distance(nozzle.position, hit.point);
