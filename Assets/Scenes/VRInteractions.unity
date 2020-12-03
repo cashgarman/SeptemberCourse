@@ -1169,6 +1169,7 @@ MonoBehaviour:
   sound: {fileID: 482438239418748622}
   flash: {fileID: 1669984808}
   flashDuration: 0.1
+  camera: {fileID: 1755311627}
 --- !u!4 &1387486440
 Transform:
   m_ObjectHideFlags: 0

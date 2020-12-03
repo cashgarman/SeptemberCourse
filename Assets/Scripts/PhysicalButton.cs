@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.Events;
 
 public class PhysicalButton : MonoBehaviour
@@ -15,10 +16,13 @@ public class PhysicalButton : MonoBehaviour
     public UnityEvent onPressed;
     public UnityEvent onReleased;
 
-    void Start()
+    void Awake()
     {
         button = GetComponentInChildren<ConfigurableJoint>();
         material = button.GetComponent<MeshRenderer>().material;
+
+        material.color = releasedColour;
+        material.SetColor("_EmissionColor", releasedColour);
     }
 
     void Update()
@@ -46,5 +50,11 @@ public class PhysicalButton : MonoBehaviour
             material.color = releasedColour;
             onReleased.Invoke();
         }
+    }
+
+    internal void SetLit(bool lit)
+    {
+        material.SetColor("_EmissionColor", lit ? releasedColour : Color.black);
+        material.EnableKeyword("_EMISSION");
     }
 }
